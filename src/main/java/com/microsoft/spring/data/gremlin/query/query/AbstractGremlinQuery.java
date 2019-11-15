@@ -50,6 +50,8 @@ public abstract class AbstractGremlinQuery implements RepositoryQuery {
     private GremlinQueryExecution getExecution() {
         if (this.isDeleteQuery()) {
             throw new UnsupportedOperationException("Not implemented yet");
+        } else if (this.method.isPageQuery()) {
+            throw new UnsupportedOperationException("Not implemented yet");
         } else {
             return new GremlinQueryExecution.FindExecution(this.operations);
         }

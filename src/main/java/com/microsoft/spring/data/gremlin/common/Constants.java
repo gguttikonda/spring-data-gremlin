@@ -93,4 +93,9 @@ public class Constants {
     
     public static final int DEFAULT_MAX_CONTENT_LENGTH = 65536;
 
+    public static final String SKIP = "__gremlinQuerySkip";
+    public static final String LIMIT = "__gremlinQueryLimit";
+
+    public static final String SKIP_LIMIT = ".skip(" + SKIP + ").limit(" + LIMIT + ")";
+
 }

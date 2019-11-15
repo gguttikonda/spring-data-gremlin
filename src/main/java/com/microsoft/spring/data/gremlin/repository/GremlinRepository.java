@@ -5,14 +5,15 @@
  */
 package com.microsoft.spring.data.gremlin.repository;
 
-import com.microsoft.spring.data.gremlin.common.GremlinEntityType;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
-
 import java.io.Serializable;
 
+import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.microsoft.spring.data.gremlin.common.GremlinEntityType;
+
 @NoRepositoryBean
-public interface GremlinRepository<T, ID extends Serializable> extends CrudRepository<T, ID> {
+public interface GremlinRepository<T, ID extends Serializable> extends PagingAndSortingRepository<T, ID> {
 
     Iterable<T> findAll(Class<T> domainClass);
 

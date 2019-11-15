@@ -54,7 +54,7 @@ public class GremlinQueryMethod extends QueryMethod {
         return StringUtils.hasText(query) ? query : null;
     }
 
-    private Query getQueryAnnotation() {
+    public Query getQueryAnnotation() {
         return AnnotatedElementUtils.findMergedAnnotation(method, Query.class);
     }
 }

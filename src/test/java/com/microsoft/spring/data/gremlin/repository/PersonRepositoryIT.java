@@ -16,10 +16,15 @@ import org.assertj.core.util.Lists;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -244,6 +249,33 @@ public class PersonRepositoryIT {
         Assert.assertNotNull(foundPerson);
         Assert.assertEquals(foundPerson.getId(), this.person1.getId());
         Assert.assertEquals(foundPerson.getName(), this.person1.getName());
+        this.repository.deleteAll();
+        Assert.assertFalse(this.repository.findAll().iterator().hasNext());
+        
+    }
+    
+    @Test
+    public void testPageQuery() {
+        final Person p = this.repository.save(this.person);
+        final Person p0 = this.repository.save(this.person0);
+        final Person p1 = this.repository.save(this.person1);
+        
+        Assert.assertTrue(p != null && p0 != null && p1 != null);
+        
+        final Pageable pageable = PageRequest.of(0, 2, Sort.by(new Order(Direction.ASC, "name")));
+        
+        final Page<Person> personPage = this.repository.findPersonsOrderByName(pageable);
+
+        Assert.assertNotNull(personPage);
+        Assert.assertEquals(personPage.getTotalElements(), 3L);
+        Assert.assertEquals(personPage.getNumberOfElements(), 2L);
+
+        Assert.assertEquals(personPage.getContent().get(0).getName(), p.getName());
+        Assert.assertEquals(personPage.getContent().get(1).getName(), p0.getName());
+        
+        this.repository.deleteAll();
+        Assert.assertFalse(this.repository.findAll().iterator().hasNext());
+        
     }
 }
 

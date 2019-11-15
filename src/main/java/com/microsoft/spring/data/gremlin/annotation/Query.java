@@ -14,8 +14,8 @@ import java.lang.annotation.Target;
 import org.springframework.data.annotation.QueryAnnotation;
 
 /**
- * Annotation to declare Parameterized queries to be defined as String. 
- * Inspired from Spring Neo4j implementation
+ * Annotation to declare Parameterized queries to be defined as String. Inspired
+ * from Spring Neo4j implementation
  *
  * @author Ganesh Guttikonda
  */
@@ -29,5 +29,12 @@ public @interface Query {
      * Defines the Gremlin query to be executed when the annotated method is called.
      */
     String value() default "";
+
+    /**
+     * Defines the count query for Page support
+     * 
+     * @return
+     */
+    String countQuery() default "";
 
 }
