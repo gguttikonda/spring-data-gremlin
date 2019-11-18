@@ -56,7 +56,7 @@ public interface GremlinQueryExecution {
 
         @Override
         public Object execute(@NonNull GremlinQuery query, @NonNull Class<?> domainClass) {
-            final GremlinSource<?> source = GremlinUtils.toGremlinSource(domainClass);
+            
             final Map<String, Object> params = query.getParams();
             final Query annotatedQuery = query.getGremlinQuery();
             Assert.notNull(annotatedQuery, "annotatedQuery should not be null");
@@ -69,6 +69,7 @@ public interface GremlinQueryExecution {
 
             if (GremlinTemplate.class.equals(this.operations.getClass())) {
                 try {
+                    final GremlinSource<?> source = GremlinUtils.toGremlinSource(domainClass);
                     final List<Result> gremlinResults = rs.all().get();
                     final List<?> results = ((GremlinTemplate) this.operations).recoverDomainList(source, gremlinResults);
 
@@ -102,7 +103,7 @@ public interface GremlinQueryExecution {
 
         @Override
         public Object execute(@NonNull GremlinQuery query, @NonNull Class<?> domainClass) {
-            final GremlinSource<?> source = GremlinUtils.toGremlinSource(domainClass);
+            
             final Map<String, Object> params = query.getParams();
             final Query annotatedQuery = query.getGremlinQuery();
             Assert.notNull(annotatedQuery, "annotatedQuery should not be null");
@@ -115,6 +116,7 @@ public interface GremlinQueryExecution {
 
             if (GremlinTemplate.class.equals(this.operations.getClass())) {
                 try {
+                    final GremlinSource<?> source = GremlinUtils.toGremlinSource(domainClass);
                     final Long count = executeCountQuery(query, params);
                     final Pageable pageable = accessor.getPageable();
                     final List<?> data = ((GremlinTemplate) this.operations).recoverDomainList(source, rs.all().get());
